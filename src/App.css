@@ -28,6 +28,51 @@
   color: #61dafb;
 }
 
+.button {
+  background-color: rgba(255, 255, 255,1);
+  border: 0px solid;
+  color: #566573;
+}
+.button:focus {
+  outline: 0px 
+}
+
+.border-width {
+  border-width: 2px !important;
+}
+
+#modal {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal:empty {
+  display: none;
+}
+
+#modal > div {
+  background-color: white;
+  max-width: 500px;
+  padding: 35px;
+  text-align: center;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#modal form {
+
+  display: flex;
+  flex-direction: column;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
