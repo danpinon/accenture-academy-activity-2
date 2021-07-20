@@ -11,6 +11,7 @@ const UserRow = ({name, lastName, email, url, id, active, users, setUsers}) => {
         lastName,
         email,
         url,
+        active
       
     })
     const handleRemoveUser = () => {
@@ -29,23 +30,31 @@ const UserRow = ({name, lastName, email, url, id, active, users, setUsers}) => {
                     lastName: theUser.lastName,
                     email: theUser.email,
                     url: theUser.url,
+                    active: theUser.active
                 }
             }
             return user
         })
+        setIsActive(user.active)
         setUsers(newUsers)
     }
 
-    const handleStateUser = (e) => {
+    const handleStateUser = (e) => {    
         setUser({...user, [e.target.id]: e.target.value})
     }
+
+    const setActiveUser = (e) => {
+        setUser({...user, active: e.target.checked})
+    }
+
+    console.log(user)
     return (
         <div className="border p-2 row justify-content-between rounded mb-2 shadow-sm">
             <div className="row ml-4 align-items-center">
-                <div className={`mr-3 border rounded-circle border-width overflow-hidden d-flex justify-content-center ${!isActive? 'border-success': 'border-danger'}`} style={{height: "50px", width: "50px"}}>
+                <div className={`mr-3 border rounded-circle border-width overflow-hidden d-flex justify-content-center ${isActive? 'border-success': 'border-danger'}`} style={{height: "50px", width: "50px"}}>
                     <img className="h-100 "src={url} alt="profile"/>
                 </div>
-                <h5>{name} {lastName} ({email})</h5>
+                <h5>{active} {name} {lastName} ({email})</h5>
             </div>
             <div className="row mr-3 align-items-center">
                 <button onClick={() => setEdit(!edit)} className="mr-4 button">
@@ -128,10 +137,11 @@ const UserRow = ({name, lastName, email, url, id, active, users, setUsers}) => {
                                         id="active"
                                         type="checkbox"
                                         onClick={(e) => {
-                                            setIsActive(!isActive)
+                                            
+                                            setActiveUser(e)
                                             }}
-                                        value={isActive}
-                                        checked={isActive}
+                                        value={user.active}
+                                        checked={user.active}
                                     />
                                 </label>
                                 <button onClick={(e) => setEdit(false)}>Cancel</button>

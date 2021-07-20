@@ -10,13 +10,18 @@ const Header = ({users, setUsers}) => {
         lastName: "Lastname",
         email: "test@test.com",
         url: "https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg",
-        active: 'dd'
+        active: false
     } 
     const [user, setUser] = useState(newUser)
     const [add, setAdd] = useState(false)
-    
+    console.log(user)
     const handleAddUser = (e) => {
-        setUser({...user, [e.target.id]: e.target.value, active: isActive}) 
+        setUser({...user, [e.target.id]: e.target.value}) 
+    }
+
+    const setActiveUser = (e) => {
+        console.log('check event:',e.target.checked)
+        setUser({...user, active: e.target.checked})
     }
     
     return (
@@ -63,25 +68,23 @@ const Header = ({users, setUsers}) => {
                                     <input
                                         id="email"
                                         type='email'
-                                        onClick={(e) => handleAddUser(e)}                                        
+                                        onChange={(e) => handleAddUser(e)}                                        
                                         placeholder="Email"
                                     />
                                 </label>
                                 <label htmlFor="active">
                                 Active
                                     <input
-                                        id="isActive"
                                         type="checkbox"
-                                        onClick={(e) => {
-                                            handleAddUser(e)
-                                            setIsActive(!isActive)}}
-                                        value={isActive}
-                                        checked={isActive}
+                                        onClick={(e) => setActiveUser(e)}
+                                        value={user.active}
+                                        checked={user.active}
                                     />
                                 </label>
-                                    
-                                <button onClick={(e) => setAdd(false)}>Cancel</button>
-                                <button onClick={(e) => {}}>Submit</button>
+                                  <div className="d-flex justify-content-between">
+                                    <button className="btn btn-outline-danger" onClick={(e) => setAdd(false)}>Cancel</button>
+                                    <button className="btn btn-primary"onClick={(e) => {}}>Submit</button>
+                                  </div>  
                             </form>
                         </>
                     </AddUserModal>
