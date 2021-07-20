@@ -144,8 +144,10 @@ const UserRow = ({name, lastName, email, url, id, active, users, setUsers}) => {
                                         checked={user.active}
                                     />
                                 </label>
-                                <button onClick={(e) => setEdit(false)}>Cancel</button>
-                                <button className="btn btn-primary">Submit</button>
+                                <div className="d-flex justify-content-between">
+                                    <button className="btn btn-outline-danger" onClick={(e) => setEdit(false)}>Cancel</button>
+                                    <button className="btn btn-primary">Submit</button>
+                                </div>
                             </form>
                         </>
                     </AddUserModal>

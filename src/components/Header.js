@@ -3,7 +3,6 @@ import AddUserModal from './AddUserModal'
 
 const Header = ({users, setUsers}) => {
 
-    const [isActive, setIsActive] = useState(false)
     const newUser = {
         id: new Date().valueOf(),
         name: "New User",
