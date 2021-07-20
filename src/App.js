@@ -5,11 +5,10 @@ import UserList from './components/UserList'
 
 function App() {
   const [users, setUsers] = useState([])
-  console.log(users)
   return (
     <div className="App">
-      <Header users={users} onClick={(value) => {setUsers(value)}} />
-      <UserList users={users} onClick={(value) => {setUsers(value)}}/>
+      <Header users={users} setUsers={(value) => {setUsers(value)}} />
+      <UserList users={users} setUsers={(value) => {setUsers(value)}}/>
     </div>
   );
 }

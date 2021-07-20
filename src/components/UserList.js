@@ -1,8 +1,7 @@
 import React from 'react'
 import UserRow from '../components/UserRow'
 
-const UserList = ({users, onClick}) => {
-    console.log(users)
+const UserList = ({users, setUsers}) => {
     return (
         <div className="p-4">
             {
@@ -15,8 +14,9 @@ const UserList = ({users, onClick}) => {
                     email={user.email} 
                     url={user.url} 
                     id={user.id}
+                    active={user.active}
                     users={users}
-                    onClick={onClick}
+                    setUsers={setUsers}
                     />
                 </div>
                 )))

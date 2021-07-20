@@ -1,32 +1,48 @@
 import React, { useState } from 'react'
 import '../App.css'
 import AddUserModal from './AddUserModal'
-const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
-    const [isActive, setIsActive] = useState(false)
+const UserRow = ({name, lastName, email, url, id, active, users, setUsers}) => {
+    console.log(active)
+    const [isActive, setIsActive] = useState(active)
     const [edit, setEdit] = useState(false)
-
+    const [user, setUser] = useState({
+        id,
+        name,
+        lastName,
+        email,
+        url,
+      
+    })
     const handleRemoveUser = () => {
        const newUsers = users.filter(user => user.id !== id)
-       onClick(newUsers)
+       setUsers(newUsers)
     }
 
-    const handleUpdateUser = (e) => {
+    const handleUpdateUser = (theUser) => {
         const newUsers = users.map(user => {
             if (user.id === id) {
+                console.log('the user',theUser)
                 return {
                     ...user,
-                    [e.target.id]: e.target.value,
+                    id: theUser.id,       
+                    name: theUser.name,
+                    lastName: theUser.lastName,
+                    email: theUser.email,
+                    url: theUser.url,
                 }
             }
             return user
         })
-        onClick(newUsers)
+        setUsers(newUsers)
     }
 
+    const handleStateUser = (e) => {
+        setUser({...user, [e.target.id]: e.target.value})
+    }
     return (
         <div className="border p-2 row justify-content-between rounded mb-2 shadow-sm">
             <div className="row ml-4 align-items-center">
-                <div className={`mr-3 border rounded-circle border-width overflow-hidden d-flex justify-content-center ${isActive? 'border-success': 'border-danger'}`} style={{height: "50px", width: "50px"}}>
+                <div className={`mr-3 border rounded-circle border-width overflow-hidden d-flex justify-content-center ${!isActive? 'border-success': 'border-danger'}`} style={{height: "50px", width: "50px"}}>
                     <img className="h-100 "src={url} alt="profile"/>
                 </div>
                 <h5>{name} {lastName} ({email})</h5>
@@ -62,6 +78,7 @@ const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
                             <form
                             onSubmit={(e) => {
                                 e.preventDefault();
+                                handleUpdateUser(user)
                                 setEdit(!edit)
                             }}
                             >
@@ -69,8 +86,8 @@ const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
                                 Image Url
                                     <input
                                         id="url"
-                                        onChange={(e) => handleUpdateUser(e)}
-                                        value={url}
+                                        onChange={(e) => handleStateUser(e)}
+                                        value={user.url}
                                         placeholder="Image Url"
                                     />
                                 </label>
@@ -79,8 +96,8 @@ const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
                                 Name
                                     <input
                                         id="name"
-                                        onChange={(e) => handleUpdateUser(e)}
-                                        value={name}
+                                        onChange={(e) => handleStateUser(e)}
+                                        value={user.name}
                                         placeholder="Name"
                                     />
                                 </label>
@@ -89,8 +106,8 @@ const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
                                 Lastname
                                     <input
                                         id="lastName"
-                                        onChange={(e) => handleUpdateUser(e)}
-                                        value={lastName}
+                                        onChange={(e) => handleStateUser(e)}
+                                        value={user.lastName}
                                         placeholder="Last Name"
                                     />
                                 </label>
@@ -99,21 +116,25 @@ const UserRow = ({name, lastName, email, url, id, onClick, users}) => {
                                 Email
                                     <input
                                         id="email"
-                                        onChange={(e) => handleUpdateUser(e)}
-                                        value={email}
+                                        type='email'
+                                        onChange={(e) => handleStateUser(e)}
+                                        value={user.email}
                                         placeholder="Email"
                                     />
                                 </label>
                                 <label htmlFor="active">
                                 Active
                                     <input
-                                        id="isActive"
+                                        id="active"
                                         type="checkbox"
-                                        onClick={(e) => setIsActive(!isActive)}
+                                        onClick={(e) => {
+                                            setIsActive(!isActive)
+                                            }}
                                         value={isActive}
                                         checked={isActive}
                                     />
                                 </label>
+                                <button onClick={(e) => setEdit(false)}>Cancel</button>
                                 <button className="btn btn-primary">Submit</button>
                             </form>
                         </>
